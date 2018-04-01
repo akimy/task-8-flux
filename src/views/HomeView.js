@@ -4,26 +4,35 @@ import LoggerStore from '../stores/LoggerStore';
 import Logger from '../Logger';
 import { loadAnimals, removeAnimal, addAnimal } from '../actions';
 
+/**
+ * @class View - отвечает за рендеринг данных на странице
+*/
 class HomeView extends View {
+  /**
+   * Помещает в локальную область видимости логгер, сторы и диспетчер (наследуется от View)
+   * @param {Dispatcher} dispatcher
+   */
   constructor(dispatcher) {
     super(dispatcher);
-
     this.logger = new Logger(document.querySelector('.log__text'));
-
     this.animalStore = new AnimalStore(this.dispatcher);
     this.loggerStore = new LoggerStore(this.logger, this.dispatcher);
   }
 
+  /**
+   * Инициализирует приложение
+  */
   init() {
     this.animalStore.addChangeListener(() => {
       this.render();
     });
-
     this.initDom();
-
     loadAnimals(this.dispatcher);
   }
 
+  /**
+   * Получает DOM-элементы и навешивает обработчики событий на них
+  */
   initDom() {
     this.button = document.querySelector('.view-stub__apply');
     this.animals = document.querySelector('.animals');
@@ -45,6 +54,9 @@ class HomeView extends View {
     });
   }
 
+  /**
+   * Перерисовывает DOM страницы
+  */
   render() {
     const animals = this.animalStore.getState();
 
@@ -72,12 +84,19 @@ class HomeView extends View {
     });
   }
 
+  /**
+   * Удаляет животное из списка
+   * @param {Number} index
+   */
   onRemoveAnimal(index) {
     removeAnimal(this.dispatcher, index).catch((error) => {
       this.logger.write(error.message);
     });
   }
 
+  /**
+   * Добавляет животное в список
+  */
   onAddAnimal() {
     addAnimal(this.dispatcher, this.input.value).then(() => {
       this.input.value = '';

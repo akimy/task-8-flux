@@ -1,8 +1,14 @@
+/**
+ * @class Logger - класс для логирования помещает записи в элемент на странице
+*/
 class Logger {
   constructor(container) {
     this.container = container;
   }
 
+  /**
+   * Возвращает текущую дату в формате hh:mm:ss
+  */
   getDateString() {
     const now = new Date();
     return `${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}:${now.getSeconds()
@@ -12,8 +18,8 @@ class Logger {
   /**
    * Автопрокручивает контейнер с логами
   */
- scroll() {
-  this.container.scrollTop = this.container.scrollHeight;
+  scroll() {
+    this.container.scrollTop = this.container.scrollHeight;
   }
 
   /**

@@ -1,6 +1,14 @@
 import { EventEmitter } from 'events';
 
+/**
+ * @class Store - класс для наследования хранилище данных в Flux-архитектуре
+*/
 class Store extends EventEmitter {
+  /**
+   * Получает в локальную область видимости изначальный стейт, регистрирует callback на
+   * this.dispatchPayload
+   * @param {Dispatcher} dispatcher
+   */
   constructor(dispatcher) {
     super();
     this.event = 'change';
@@ -13,34 +21,36 @@ class Store extends EventEmitter {
     });
   }
 
+  /**
+   * Обновляет стейт, эмитит событие 'change'
+   * @param {Object} action
+   */
   dispatchPayload(action) {
-    const first = this.state;
-    const second = this.reduce(first, action);
-
-    let changed = false;
-
-    if (!this.equal(first, second)) {
-      this.state = second;
-      changed = true;
-    }
-
-    if (changed) {
-      this.emit(this.event);
-    }
+    this.state = this.reduce(this.state, action);
+    this.emit(this.event);
   }
 
-  equal(fisrt, second) {
-    return fisrt === second;
-  }
-
+  /**
+   * Используем метод эвент эмиттера для вызова колбека по событию 'change'
+   * @param {Function} callback
+   * @returns {StoreInstance}
+   */
   addChangeListener(callback) {
     return this.addListener(this.event, callback);
   }
 
+  /**
+   * Перестаем вызывать калбэк при событии 'change'
+   * @param {Function} callback
+   */
   removeChangeListener(callback) {
     this.removeListener(this.event, callback);
   }
 
+  /**
+   * Возвращает стейт из стора в нашем случае массив животных
+   * @returns {*}
+  */
   getState() {
     return this.state;
   }

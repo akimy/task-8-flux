@@ -1,7 +1,12 @@
 import constants from './constants';
 import sendToServer from './sendToServer';
 
+/**
+ * Экшен загрузки животных
+ * @param {Dispatcher} dispatcher
+ */
 function loadAnimals(dispatcher) {
+  console.log(dispatcher);
   dispatcher.dispatch({
     type: constants.REQUEST_START,
     payload: null,
@@ -22,6 +27,10 @@ function loadAnimals(dispatcher) {
   });
 }
 
+/**
+ * Экшен для добавления животных
+ * @param {Dispatcher} dispatcher
+ */
 function addAnimal(dispatcher, animal) {
   dispatcher.dispatch({
     type: constants.REQUEST_START,
@@ -41,6 +50,10 @@ function addAnimal(dispatcher, animal) {
   });
 }
 
+/**
+ * Экшен для удаления животных из списка
+ * @param {Dispatcher} dispatcher
+ */
 function removeAnimal(dispatcher, index) {
   dispatcher.dispatch({
     type: constants.REQUEST_START,
