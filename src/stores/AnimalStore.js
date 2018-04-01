@@ -6,17 +6,12 @@ import constans from '../constants';
  * @class AnimalStore
 */
 class AnimalStore extends Store {
-  /**
-  * Устанавливает инстанс логера в локальную область видимости
-  * @param {Logger} logger
-  * @param {Dispatcher} dispatcher
-  */
   getInitialState() {
     return [];
   }
 
   /**
-   * обработчик экшенов
+   * Метод редьюсер получает текущий стейт и action, возвращает измененный стейт
    * @param {*} state
    * @param {*} action
   */

@@ -8,7 +8,7 @@ class Dispatcher {
   }
 
   /**
-   * Регестрирует экшен
+   * Регестрирует callback
    * @param {Function} callback
    */
   register(callback) {
@@ -18,17 +18,12 @@ class Dispatcher {
   }
 
   /**
-   * Диспатчит экшен
+   * Вызывает callback с полезной нагрузкой
    * @param {Object} payload - полезная нагрузка
    */
   dispatch(payload) {
-    this.pendingPayload = payload;
-    try {
-      for (const id in this.callbacks) {
-        this.callbacks[id](this.pendingPayload);
-      }
-    } finally {
-      delete this.pendingPayload;
+    for (const id in this.callbacks) {
+      this.callbacks[id](payload);
     }
   }
 }

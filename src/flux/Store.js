@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-
+import Logger from '../Logger';
 /**
  * @class Store - класс для наследования хранилище данных в Flux-архитектуре
 */
@@ -13,7 +13,7 @@ class Store extends EventEmitter {
     super();
     this.event = 'change';
     this.dispatcher = dispatcher;
-
+    this.logger = new Logger(document.querySelector('.log__text'));
     this.state = this.getInitialState();
 
     dispatcher.register((payload) => {
@@ -26,8 +26,21 @@ class Store extends EventEmitter {
    * @param {Object} action
    */
   dispatchPayload(action) {
-    this.state = this.reduce(this.state, action);
-    this.emit(this.event);
+    const first = this.state;
+    const second = this.reduce(this.state, action);
+    if (!this.isEqual(first, second)) {
+      this.state = second;
+      this.emit(this.event);
+    }
+  }
+
+  /**
+   * Сверяет стейт с предыдущим значением - если они не равны - значит стейт нужно обновить
+   * @param {*} first
+   * @param {*} second
+   */
+  isEqual(first, second) {
+    return JSON.stringify(first) === JSON.stringify(second);
   }
 
   /**
@@ -52,6 +65,8 @@ class Store extends EventEmitter {
    * @returns {*}
   */
   getState() {
+    this.logger.write(`Store.js: current State: 
+    <pre class="log__store">${JSON.stringify(this.state)}</pre>`);
     return this.state;
   }
 }

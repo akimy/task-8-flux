@@ -25,12 +25,13 @@ class LoggerStore extends Store {
   }
 
   /**
-   * обработчик экшенов
+   * Метод редьюсер получает текущий стейт и action, возвращает измененный стейт
+   * в данном случае используется для логирования action Logger инстансом
    * @param {*} state
    * @param {*} action
   */
   reduce(state, action) {
-    this.logger.write(JSON.stringify(action));
+    this.logger.write(`Action call: ${action.type} ${JSON.stringify(action.payload)}`);
 
     return state;
   }

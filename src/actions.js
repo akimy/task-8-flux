@@ -6,7 +6,6 @@ import sendToServer from './sendToServer';
  * @param {Dispatcher} dispatcher
  */
 function loadAnimals(dispatcher) {
-  console.log(dispatcher);
   dispatcher.dispatch({
     type: constants.REQUEST_START,
     payload: null,
