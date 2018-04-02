@@ -66,6 +66,12 @@
     font-family: monospace;
 }
 
+.input-block__explanation {
+    display: block;
+    margin-bottom: 5px;
+    color: dimgray;
+}
+
 .log__clear {
     position: absolute;
     right: 5px;
