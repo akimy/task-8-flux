@@ -1,9 +1,9 @@
-import { EventEmitter } from 'events';
-import Logger from '../Logger';
+import Emitter from './Emitter';
+
 /**
  * @class Store - класс для наследования хранилище данных в Flux-архитектуре
 */
-class Store extends EventEmitter {
+class Store extends Emitter {
   /**
    * Получает в локальную область видимости изначальный стейт, регистрирует callback на
    * this.dispatchPayload
@@ -49,7 +49,7 @@ class Store extends EventEmitter {
    * @returns {StoreInstance}
    */
   addChangeListener(callback) {
-    return this.addListener(this.event, callback);
+    return this.on(this.event, callback);
   }
 
   /**
@@ -57,7 +57,7 @@ class Store extends EventEmitter {
    * @param {Function} callback
    */
   removeChangeListener(callback) {
-    this.removeListener(this.event, callback);
+    this.off(this.event, callback);
   }
 
   /**

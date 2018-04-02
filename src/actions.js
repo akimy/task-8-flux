@@ -56,18 +56,21 @@ function addAnimal(dispatcher, animal) {
 function removeAnimal(dispatcher, index) {
   dispatcher.dispatch({
     type: constants.REQUEST_START,
+    payload: `index ${index}`,
+  });
+
+
+  // Это "Optimistic update" - мы убираем животное из списка раньше чем пришел ответ от сервера
+  dispatcher.dispatch({
+    type: constants.REMOVE_ANIMAL,
     payload: index,
   });
 
-  return sendToServer(index).then((result) => {
-    dispatcher.dispatch({
-      type: constants.REMOVE_ANIMAL,
-      payload: result,
-    });
-
+  return sendToServer(index).then((index) => {
+    // Диспатч Remove Animal стоило расположить здесь если мы хотим дождаться ответа сервера
     dispatcher.dispatch({
       type: constants.REQUEST_END,
-      payload: index,
+      payload: `index ${index}`,
     });
   });
 }

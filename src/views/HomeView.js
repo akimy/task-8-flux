@@ -89,6 +89,7 @@ class HomeView extends View {
    * @param {Number} index
    */
   onRemoveAnimal(index) {
+    this.logger.write('<i>Optimistic update</i>');
     removeAnimal(this.dispatcher, index).catch((error) => {
       this.logger.write(error.message);
     });
