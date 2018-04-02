@@ -15,8 +15,8 @@ class HomeView extends View {
   constructor(dispatcher) {
     super(dispatcher);
     this.logger = new Logger(document.querySelector('.log__text'));
-    this.animalStore = new AnimalStore(this.dispatcher);
     this.loggerStore = new LoggerStore(this.logger, this.dispatcher);
+    this.animalStore = new AnimalStore(this.dispatcher, this.logger);
   }
 
   /**

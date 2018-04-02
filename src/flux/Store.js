@@ -9,11 +9,11 @@ class Store extends EventEmitter {
    * this.dispatchPayload
    * @param {Dispatcher} dispatcher
    */
-  constructor(dispatcher) {
+  constructor(dispatcher, logger) {
     super();
     this.event = 'change';
     this.dispatcher = dispatcher;
-    this.logger = new Logger(document.querySelector('.log__text'));
+    this.logger = logger;
     this.state = this.getInitialState();
 
     dispatcher.register((payload) => {

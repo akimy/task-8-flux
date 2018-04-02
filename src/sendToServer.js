@@ -23,7 +23,7 @@ const sendToServer = data => new Promise((resolve, reject) => {
     } else {
       reject(new Error('<span style="color: red">Empty string sending. Abort.</span>'));
     }
-  }, 500);
+  }, 300);
 });
 
 export default sendToServer;

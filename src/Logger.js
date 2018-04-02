@@ -11,7 +11,8 @@ class Logger {
   */
   getDateString() {
     const now = new Date();
-    return `${now.getHours()}:${now.getMinutes() < 10 ? '0' : ''}${now.getMinutes()}:${now.getSeconds()
+    return `${now.getHours() < 10 ? '0' : ''}${now.getHours()}:${now.getMinutes()
+      < 10 ? '0' : ''}${now.getMinutes()}:${now.getSeconds()
       < 10 ? '0' : ''}${now.getSeconds()}`;
   }
 
@@ -28,11 +29,15 @@ class Logger {
   */
   write(message) {
     if (this.container) {
-      const span = document.createElement('span');
+      const span = this.createDomElement();
       span.innerHTML = `> ${message} ${this.getDateString()}`;
       this.container.appendChild(span);
       this.scroll();
     }
+  }
+
+  createDomElement() {
+    return document.createElement('span');
   }
 
   /**
