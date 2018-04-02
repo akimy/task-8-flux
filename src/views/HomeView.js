@@ -98,11 +98,29 @@ class HomeView extends View {
    * Добавляет животное в список
   */
   onAddAnimal() {
-    addAnimal(this.dispatcher, this.input.value).then(() => {
-      this.input.value = '';
-    }).catch((error) => {
-      this.logger.write(error.message);
-    });
+    const animalName = this.input.value;
+    if (this.validateString(animalName)) {
+      addAnimal(this.dispatcher, this.input.value).then(() => {
+        this.input.value = '';
+      }).catch((error) => {
+        this.logger.write(error.message);
+      });
+    } else {
+      this.logger.write('<span style="color: red">Client valudation. Empty string sending. Abort.</span>');
+    }
+  }
+
+  /**
+   * Валидирует данные в случае неудачи - пишет об этом в лог
+   * @param {String} string
+   * @returns {Boolean}
+  */
+  validateString(string) {
+    if (string.length > 0) {
+      return true;
+    }
+
+    return false;
   }
 }
 

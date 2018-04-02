@@ -11,10 +11,10 @@ describe('sendToServer - function', () => {
   });
 
   it('Выбрасывает исключение в случае отправки пустой строки', async () => {
-    const expectedError = '<span style="color: red">Empty string sending. Abort.</span>';
+    const expectedError = '<span style="color: red">String with # sended. Abort.</span>';
     let error;
     try {
-      await sendToServer('');
+      await sendToServer('asd#');
     } catch (e) {
       error = e.message;
     }
